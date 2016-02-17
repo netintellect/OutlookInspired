@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<SolidColorBrush x:Key="AccentBrush" Color="#FF0072C6" />
+	<SolidColorBrush x:Key="HighLightBrush" Color="#FFD4D4D4" />
+	<SolidColorBrush x:Key="HighDarkBrush" Color="#FFABABAB" />
+	<SolidColorBrush x:Key="StrongBrush" Color="#FF767676" />
+	<SolidColorBrush x:Key="MainBrush" Color="#FFFFFFFF" />
+	<SolidColorBrush x:Key="InvertedBrush" Color="#FF000000" />
+	<SolidColorBrush x:Key="ValidationBrush" Color="#FFFF0000" />
+	<SolidColorBrush x:Key="TransparentBrush" Color="#01FFFFFF" />
+
+    <!-- Brushes for Categories -->
+	<SolidColorBrush x:Key="YellowCategoryBrush" Color="#FFF0C600" />
+	<SolidColorBrush x:Key="GreenCategoryBrush" Color="#FFA3C734" />
+	<SolidColorBrush x:Key="PurpleCategoryBrush" Color="#FF9774B4" />
+	<SolidColorBrush x:Key="PinkCategoryBrush" Color="#FFD6798D" />
+
+	<!-- Brushes for TimeMarkers -->
+	<SolidColorBrush x:Key="FreeMarkerBrush" Color="#FF309B46" />
+	<SolidColorBrush x:Key="BusyMarkerBrush" Color="#FFE61E26" />
+	<SolidColorBrush x:Key="TentativeMarkerBrush" Color="#FF41229B" />
+	<SolidColorBrush x:Key="OutOfOfficeMarkerBrush" Color="#FFF1C700" />
+
+</ResourceDictionary>
+	

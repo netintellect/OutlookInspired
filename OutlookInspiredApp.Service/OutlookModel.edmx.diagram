@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a207bd981aeb440ab1a67052dbb1feed" Name="Diagram1">
+        <EntityTypeShape EntityType="OutlookModel.AppointmentResource" Width="1.5" PointX="10.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.Appointment" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.Category" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.EmailClient" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.Email" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.ExceptionAppointment" Width="1.5" PointX="12.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.ExceptionOccurrence" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.ExceptionResource" Width="1.5" PointX="15" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.Folder" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.Resource" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.ResourceType" Width="1.5" PointX="6" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OutlookModel.TimeMarker" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="OutlookModel.FK_AppointmentResources_Appointments" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_AppointmentResources_Resources" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Appointments_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Appointments_TimeMarkers" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_ExceptionOccurrences_Appointments" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Emails_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_ExceptionAppointments_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Emails_EmailClients" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Folder_EmailClients" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Emails_Folder" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_ExceptionAppointments_ExceptionOccurrences" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_ExceptionAppointments_TimeMarkers" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_ExceptionResources_ExceptionAppointments" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_ExceptionResources_Resources" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Folder_Folder" ManuallyRouted="false" />
+        <AssociationConnector Association="OutlookModel.FK_Resources_ResourceTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

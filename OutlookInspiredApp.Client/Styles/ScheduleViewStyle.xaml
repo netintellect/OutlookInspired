@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                    xmlns:local="clr-namespace:TelerikOutlookInspiredApp.Helpers"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<local:CategoryToBrushConverter x:Key="CategoryToBrushConverter" />
+	
+	<DataTemplate x:Key="TimeMarkerHeaderTemplate">
+		<TextBlock Text="{Binding TimeMarkerName}" />
+	</DataTemplate>
+
+	<local:OrientedGroupHeaderContentTemplateSelector x:Key="GroupHeaderContentTemplateSelector">
+		<!-- Default templates -->
+		<local:OrientedGroupHeaderContentTemplateSelector.HorizontalTemplate>
+			<DataTemplate>
+				<ContentPresenter Content="{Binding FormattedName}" Height="16" Margin="4" />
+			</DataTemplate>
+		</local:OrientedGroupHeaderContentTemplateSelector.HorizontalTemplate>
+		<local:OrientedGroupHeaderContentTemplateSelector.VerticalTemplate>
+			<DataTemplate>
+				<telerik:LayoutTransformControl VerticalAlignment="Top">
+					<telerik:LayoutTransformControl.LayoutTransform>
+						<RotateTransform Angle="-90" />
+					</telerik:LayoutTransformControl.LayoutTransform>
+					<ContentPresenter Content="{Binding FormattedName}" Margin="4" Height="16" />
+				</telerik:LayoutTransformControl>
+			</DataTemplate>
+		</local:OrientedGroupHeaderContentTemplateSelector.VerticalTemplate>
+		<local:OrientedGroupHeaderContentTemplateSelector.HorizontalResourceTemplate>
+			<DataTemplate>
+				<Grid Background="{Binding FormattedName, Converter={StaticResource CategoryToBrushConverter}}">
+					<TextBlock Foreground="Black" Text="{Binding FormattedName}" FontWeight="Bold" Margin="6 0 0 0" VerticalAlignment="Center"/>
+				</Grid>
+			</DataTemplate>
+		</local:OrientedGroupHeaderContentTemplateSelector.HorizontalResourceTemplate>
+		<local:OrientedGroupHeaderContentTemplateSelector.VerticalResourceTemplate>
+			<DataTemplate>
+				<Grid Background="{Binding FormattedName, Converter={StaticResource CategoryToBrushConverter}}">
+					<telerik:LayoutTransformControl VerticalAlignment="Center">
+						<telerik:LayoutTransformControl.LayoutTransform>
+							<RotateTransform Angle="-90" />
+						</telerik:LayoutTransformControl.LayoutTransform>
+						<TextBlock Foreground="Black" Text="{Binding FormattedName}" Margin="4" FontWeight="Bold" VerticalAlignment="Center" />
+					</telerik:LayoutTransformControl>
+				</Grid>
+			</DataTemplate>
+		</local:OrientedGroupHeaderContentTemplateSelector.VerticalResourceTemplate>
+	</local:OrientedGroupHeaderContentTemplateSelector>
+</ResourceDictionary>

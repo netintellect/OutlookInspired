@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="TelerikOutlookInspiredApp.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:local="clr-namespace:TelerikOutlookInspiredApp"
+             mc:Ignorable="d" 
+             xmlns:appearance="clr-namespace:TelerikOutlookInspiredApp.Appearance"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <local:MainViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <local:SectorTemplateSelector x:Key="ToolBarSectorTemplateSelector"
+                                      CalendarTemplate="{StaticResource CalendarViewToolBarTemplate}"
+                                      MailTemplate="{StaticResource MailViewToolBarTemplate}"/>
+
+        <local:SectorTemplateSelector x:Key="MainSectorTemplateSelector"
+                                      CalendarTemplate="{StaticResource CalendarViewMainSectorTemplate}"
+                                      MailTemplate ="{StaticResource MailViewMainSectorTemplate}"/>
+
+        <local:SectorTemplateSelector x:Key="StatusBarSectorTemplateSelector"
+                                      CalendarTemplate="{StaticResource CalendarViewStatusBarTemplate}"
+                                      MailTemplate="{StaticResource MailViewStatusBarTemplate}"/>
+
+        <local:OutlookBarTemplateSelector x:Key="OutlookBarTemplateSelector"
+									      CalendarOutlookSectionTemplate="{StaticResource OutlookSectionCalendarContentTemplate}"
+									      MailOutlookSectionTemplate="{StaticResource OutlookSectionMailContentTemplate}"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="layoutRoot" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ContentControl x:Name="ToolBarSector" Content="{Binding SelectedViewModel}" 
+						ContentTemplateSelector="{StaticResource ToolBarSectorTemplateSelector}"/>
+
+        <Grid x:Name="MainSector" Grid.Row="1" Background="{Binding Background,ElementName=OutlookBar, UpdateSourceTrigger=Default}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <telerik:RadOutlookBar x:Name="OutlookBar"
+                                               IsContentPreserved="True"
+                                               SelectedIndex="0"
+                                               HorizontalAlignment="Stretch"
+                                               IsVerticalResizerVisible="False"
+											   IsMinimizable="False"
+                                               MinimizedWidth="43" 
+                                               Width="245"
+                                               TitleTemplate="{StaticResource OutlookSectionTitleTemplate}"
+                                               ItemsSource="{Binding OutlookSections}"
+                                               SelectedItem="{Binding SelectedOutlookSection, Mode=TwoWay}"
+                                               ContentTemplateSelector="{StaticResource OutlookBarTemplateSelector}"											   
+                                               ItemTemplate="{StaticResource OutlookSectionTemplate}"
+                                               MinimizedButtonContent="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Name}" >
+                <telerik:EventToCommandBehavior.EventBindings>
+                    <telerik:EventBinding Command="{Binding OutlookBarSelectionChangedCommand}" CommandParameter="{Binding SelectedOutlookSection}" 
+													  EventName="SelectionChanged" />
+                </telerik:EventToCommandBehavior.EventBindings>
+            </telerik:RadOutlookBar>
+            <ContentControl x:Name="MainSectorTemplate" ContentTemplateSelector="{StaticResource MainSectorTemplateSelector}"  Grid.Column="1" 
+										Content="{Binding SelectedViewModel}" />
+
+
+        </Grid>
+
+        <ContentControl x:Name="StatusBarSector" Grid.Row="2" Content="{Binding SelectedViewModel}" 
+						ContentTemplateSelector="{StaticResource StatusBarSectorTemplateSelector}"/>
+
+    </Grid>
+</UserControl>

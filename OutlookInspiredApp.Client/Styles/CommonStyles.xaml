@@ -1,0 +1,110 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+	
+    <Style TargetType="telerik:RadRibbonButton" BasedOn="{StaticResource RadRibbonButtonStyle}">
+        <Setter Property="Margin" Value="4 0" />
+    </Style>
+    
+	<!--FOCUSVISUAL for customized controls -->
+	<Style x:Key="CustomFocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle StrokeThickness="1" Stroke="{StaticResource AccentBrush}" SnapsToDevicePixels="True" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+    <Style x:Key="ThemeRadioButtonStyle" TargetType="telerik:RadRadioButton" BasedOn="{StaticResource RadRadioButtonStyle}">
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="Padding" Value="1"/>
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="Margin" Value="0 0 8 0" />
+		<Setter Property="MinWidth" Value="100" />
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="FocusVisualStyle" Value="{StaticResource CustomFocusVisual}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="telerik:RadRadioButton">
+					<Grid Background="Transparent">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal" />
+								<VisualState x:Name="MouseOver">
+									<Storyboard>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="mouseOverContent" Storyboard.TargetProperty="Visibility" Duration="0">
+											<DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame.Value>
+													<Visibility>Visible</Visibility>
+												</DiscreteObjectKeyFrame.Value>
+											</DiscreteObjectKeyFrame>
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Visibility" Duration="0">
+											<DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame.Value>
+													<Visibility>Collapsed</Visibility>
+												</DiscreteObjectKeyFrame.Value>
+											</DiscreteObjectKeyFrame>
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalVisual" Storyboard.TargetProperty="BorderBrush">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AccentBrush}" />
+										</ObjectAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Pressed">
+									<Storyboard>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalVisual" Storyboard.TargetProperty="BorderBrush">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AccentBrush}" />
+										</ObjectAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Disabled" />
+							</VisualStateGroup>
+							<VisualStateGroup x:Name="CheckStates">
+								<VisualState x:Name="Checked">
+									<Storyboard>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(TextBlock.Foreground)" Duration="0">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AccentBrush}"/>
+										</ObjectAnimationUsingKeyFrames>
+										<DoubleAnimation Storyboard.TargetName="CheckedVisual" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Unchecked"/>
+								<VisualState x:Name="Indeterminate"/>
+							</VisualStateGroup>
+							<VisualStateGroup x:Name="FocusStates">
+								<VisualState x:Name="Focused" />
+								<VisualState x:Name="Unfocused"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						<StackPanel>
+							<Grid Width="48" Height="48">
+								<Border x:Name="NormalVisual" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+									<Rectangle Stroke="{StaticResource HighLightBrush}" StrokeThickness="1" Fill="{TemplateBinding Background}" />
+								</Border>
+								<Border x:Name="CheckedVisual" Opacity="0" BorderBrush="{StaticResource AccentBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{x:Null}" SnapsToDevicePixels="True" />
+							</Grid>
+							<TextBlock x:Name="mouseOverContent" Text="{TemplateBinding Content}" Margin="0 10 0 0" Visibility="Collapsed" Foreground="{StaticResource AccentBrush}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							<ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" Margin="0 10 0 0" 
+                                              TextBlock.TextAlignment="Center"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</StackPanel>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+</ResourceDictionary>

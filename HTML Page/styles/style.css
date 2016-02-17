@@ -1,0 +1,103 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+	width: 100%;
+}
+body
+{
+    background: #fff;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+a
+{
+    color: #fff;
+    outline: none;
+    text-decoration: underline;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+a img
+{
+    border: 0px;
+}
+
+p
+{
+    color: #fff;
+	line-height: 20px;
+}
+
+.container  {
+	margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
+    padding-left: 30px;
+    padding-right: 30px;
+	overflow: auto;
+}
+
+#header {
+	margin-top: 55px;
+	margin-bottom: 30px;
+}
+
+.box:before {
+	position: absolute;
+	top: 50%;
+}
+
+.box {
+	padding: 22px 20px 20px 20px;
+    position: relative;
+}
+
+.box.box-content {
+	clear: left;
+	position: relative;
+	padding: 20px 2% 35px;
+}
+
+.box-content  {
+	background-color: #0072c6;
+}
+
+.install {
+	float: right;
+	margin: 10px 0 0 0;
+}
+
+.box ul, 
+.box p {
+	margin-left: 270px !important;
+}
+
+ul
+{
+    list-style: none;
+    margin: 10px 0 0 0px;
+    margin-bottom:15px;
+}
+
+ul li
+{
+    background: url(../images/point.png) no-repeat left center;
+    padding-left: 20px;
+    color: #fff;
+    font: 14px Arial, Helvetica, sans-serif;
+    line-height: 30px;
+	list-style: none;
+}
+
+h1 img {
+	margin: 15px 0 0 30px;
+}

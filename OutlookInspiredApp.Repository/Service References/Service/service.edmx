@@ -1,0 +1,445 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="OutlookModel" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="AppointmentResource">
+        <Key>
+          <PropertyRef Name="Appointments_AppointmentID" />
+          <PropertyRef Name="Resources_ResourceID" />
+        </Key>
+        <Property Name="Appointments_AppointmentID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Resources_ResourceID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ManyToManyWorkaround" Type="Edm.Boolean" />
+        <NavigationProperty Name="Appointment" Relationship="OutlookModel.FK_AppointmentResources_Appointments" ToRole="Appointments" FromRole="AppointmentResources" />
+        <NavigationProperty Name="Resource" Relationship="OutlookModel.FK_AppointmentResources_Resources" ToRole="Resources" FromRole="AppointmentResources" />
+      </EntityType>
+      <EntityType Name="Appointment">
+        <Key>
+          <PropertyRef Name="AppointmentID" />
+        </Key>
+        <Property Name="AppointmentID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Subject" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="Body" Type="Edm.String" MaxLength="500" FixedLength="false" Unicode="true" />
+        <Property Name="Start" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="End" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="IsAllDayEvent" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="RecurrencePattern" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="TimeZoneString" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="Importance" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TimeMarkerID" Type="Edm.Int32" />
+        <Property Name="CategoryID" Type="Edm.Int32" />
+        <NavigationProperty Name="AppointmentResources" Relationship="OutlookModel.FK_AppointmentResources_Appointments" ToRole="AppointmentResources" FromRole="Appointments" />
+        <NavigationProperty Name="Category" Relationship="OutlookModel.FK_Appointments_Categories" ToRole="Categories" FromRole="Appointments" />
+        <NavigationProperty Name="TimeMarker" Relationship="OutlookModel.FK_Appointments_TimeMarkers" ToRole="TimeMarkers" FromRole="Appointments" />
+        <NavigationProperty Name="ExceptionOccurrences" Relationship="OutlookModel.FK_ExceptionOccurrences_Appointments" ToRole="ExceptionOccurrences" FromRole="Appointments" />
+      </EntityType>
+      <EntityType Name="Category">
+        <Key>
+          <PropertyRef Name="CategoryID" />
+        </Key>
+        <Property Name="CategoryID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CategoryName" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="DisplayName" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="CategoryBrush" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="Appointments" Relationship="OutlookModel.FK_Appointments_Categories" ToRole="Appointments" FromRole="Categories" />
+        <NavigationProperty Name="Emails" Relationship="OutlookModel.FK_Emails_Categories" ToRole="Emails" FromRole="Categories" />
+        <NavigationProperty Name="ExceptionAppointments" Relationship="OutlookModel.FK_ExceptionAppointments_Categories" ToRole="ExceptionAppointments" FromRole="Categories" />
+      </EntityType>
+      <EntityType Name="EmailClient">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="EmailAddress" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="Emails" Relationship="OutlookModel.FK_Emails_EmailClients" ToRole="Emails" FromRole="EmailClients" />
+        <NavigationProperty Name="Folders" Relationship="OutlookModel.FK_Folder_EmailClients" ToRole="Folders" FromRole="EmailClients" />
+      </EntityType>
+      <EntityType Name="Email">
+        <Key>
+          <PropertyRef Name="EmailID" />
+        </Key>
+        <Property Name="EmailID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Subject" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="Body" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="SenderName" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="SenderAddress" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="RecipientName" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="RecipientAddress" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="Received" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="Status" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CarbonCopy" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="FolderID" Type="Edm.Int32" />
+        <Property Name="EmailClientID" Type="Edm.Int32" />
+        <Property Name="CategoryID" Type="Edm.Int32" />
+        <Property Name="Flag" Type="Edm.Int32" />
+        <NavigationProperty Name="Category" Relationship="OutlookModel.FK_Emails_Categories" ToRole="Categories" FromRole="Emails" />
+        <NavigationProperty Name="EmailClient" Relationship="OutlookModel.FK_Emails_EmailClients" ToRole="EmailClients" FromRole="Emails" />
+        <NavigationProperty Name="Folder" Relationship="OutlookModel.FK_Emails_Folder" ToRole="Folders" FromRole="Emails" />
+      </EntityType>
+      <EntityType Name="ExceptionAppointment">
+        <Key>
+          <PropertyRef Name="ExceptionID" />
+        </Key>
+        <Property Name="ExceptionID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Subject" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="Body" Type="Edm.String" MaxLength="500" FixedLength="false" Unicode="true" />
+        <Property Name="Start" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="End" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="IsAllDayEvent" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="TimeZoneString" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="Importance" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TimeMarkerID" Type="Edm.Int32" />
+        <Property Name="CategoryID" Type="Edm.Int32" />
+        <NavigationProperty Name="Category" Relationship="OutlookModel.FK_ExceptionAppointments_Categories" ToRole="Categories" FromRole="ExceptionAppointments" />
+        <NavigationProperty Name="ExceptionOccurrence" Relationship="OutlookModel.FK_ExceptionAppointments_ExceptionOccurrences" ToRole="ExceptionOccurrences" FromRole="ExceptionAppointments" />
+        <NavigationProperty Name="TimeMarker" Relationship="OutlookModel.FK_ExceptionAppointments_TimeMarkers" ToRole="TimeMarkers" FromRole="ExceptionAppointments" />
+        <NavigationProperty Name="ExceptionResources" Relationship="OutlookModel.FK_ExceptionResources_ExceptionAppointments" ToRole="ExceptionResources" FromRole="ExceptionAppointments" />
+      </EntityType>
+      <EntityType Name="ExceptionOccurrence">
+        <Key>
+          <PropertyRef Name="ExceptionID" />
+        </Key>
+        <Property Name="ExceptionID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="MasterAppointmentID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ExceptionDate" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <NavigationProperty Name="Appointment" Relationship="OutlookModel.FK_ExceptionOccurrences_Appointments" ToRole="Appointments" FromRole="ExceptionOccurrences" />
+        <NavigationProperty Name="ExceptionAppointment" Relationship="OutlookModel.FK_ExceptionAppointments_ExceptionOccurrences" ToRole="ExceptionAppointments" FromRole="ExceptionOccurrences" />
+      </EntityType>
+      <EntityType Name="ExceptionResource">
+        <Key>
+          <PropertyRef Name="ExceptionAppointmentID" />
+          <PropertyRef Name="ExceptionAppointmentResourcesID" />
+        </Key>
+        <Property Name="ExceptionAppointmentID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ExceptionAppointmentResourcesID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ManyToManyWorkaround" Type="Edm.Boolean" />
+        <NavigationProperty Name="ExceptionAppointment" Relationship="OutlookModel.FK_ExceptionResources_ExceptionAppointments" ToRole="ExceptionAppointments" FromRole="ExceptionResources" />
+        <NavigationProperty Name="Resource" Relationship="OutlookModel.FK_ExceptionResources_Resources" ToRole="Resources" FromRole="ExceptionResources" />
+      </EntityType>
+      <EntityType Name="Folder">
+        <Key>
+          <PropertyRef Name="FolderID" />
+        </Key>
+        <Property Name="FolderID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="EmailClientID" Type="Edm.Int32" />
+        <Property Name="ParentFolderID" Type="Edm.Int32" />
+        <NavigationProperty Name="EmailClient" Relationship="OutlookModel.FK_Folder_EmailClients" ToRole="EmailClients" FromRole="Folders" />
+        <NavigationProperty Name="Emails" Relationship="OutlookModel.FK_Emails_Folder" ToRole="Emails" FromRole="Folders" />
+        <NavigationProperty Name="Folders1" Relationship="OutlookModel.FK_Folder_Folder" ToRole="Folders1" FromRole="Folders" />
+        <NavigationProperty Name="Folder1" Relationship="OutlookModel.FK_Folder_Folder" ToRole="Folders" FromRole="Folders1" />
+      </EntityType>
+      <EntityType Name="Resource">
+        <Key>
+          <PropertyRef Name="ResourceID" />
+        </Key>
+        <Property Name="ResourceID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ResourceTypeID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ResourceName" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="DisplayName" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="ResourceBrush" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="AppointmentResources" Relationship="OutlookModel.FK_AppointmentResources_Resources" ToRole="AppointmentResources" FromRole="Resources" />
+        <NavigationProperty Name="ExceptionResources" Relationship="OutlookModel.FK_ExceptionResources_Resources" ToRole="ExceptionResources" FromRole="Resources" />
+        <NavigationProperty Name="ResourceType" Relationship="OutlookModel.FK_Resources_ResourceTypes" ToRole="ResourceTypes" FromRole="Resources" />
+      </EntityType>
+      <EntityType Name="ResourceType">
+        <Key>
+          <PropertyRef Name="ResourceTypeID" />
+        </Key>
+        <Property Name="ResourceTypeID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="DisplayName" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="AllowMultipleSelection" Type="Edm.Boolean" Nullable="false" />
+        <NavigationProperty Name="Resources" Relationship="OutlookModel.FK_Resources_ResourceTypes" ToRole="Resources" FromRole="ResourceTypes" />
+      </EntityType>
+      <EntityType Name="TimeMarker">
+        <Key>
+          <PropertyRef Name="TimeMarkerID" />
+        </Key>
+        <Property Name="TimeMarkerID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="TimeMarkerName" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="TimeMarkerBrush" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="Appointments" Relationship="OutlookModel.FK_Appointments_TimeMarkers" ToRole="Appointments" FromRole="TimeMarkers" />
+        <NavigationProperty Name="ExceptionAppointments" Relationship="OutlookModel.FK_ExceptionAppointments_TimeMarkers" ToRole="ExceptionAppointments" FromRole="TimeMarkers" />
+      </EntityType>
+      <Association Name="FK_AppointmentResources_Appointments">
+        <End Type="OutlookModel.Appointment" Role="Appointments" Multiplicity="1" />
+        <End Type="OutlookModel.AppointmentResource" Role="AppointmentResources" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Appointments">
+            <PropertyRef Name="AppointmentID" />
+          </Principal>
+          <Dependent Role="AppointmentResources">
+            <PropertyRef Name="Appointments_AppointmentID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_AppointmentResources_Resources">
+        <End Type="OutlookModel.Resource" Role="Resources" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="OutlookModel.AppointmentResource" Role="AppointmentResources" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Resources">
+            <PropertyRef Name="ResourceID" />
+          </Principal>
+          <Dependent Role="AppointmentResources">
+            <PropertyRef Name="Resources_ResourceID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Appointments_Categories">
+        <End Type="OutlookModel.Category" Role="Categories" Multiplicity="0..1" />
+        <End Type="OutlookModel.Appointment" Role="Appointments" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Categories">
+            <PropertyRef Name="CategoryID" />
+          </Principal>
+          <Dependent Role="Appointments">
+            <PropertyRef Name="CategoryID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Appointments_TimeMarkers">
+        <End Type="OutlookModel.TimeMarker" Role="TimeMarkers" Multiplicity="0..1" />
+        <End Type="OutlookModel.Appointment" Role="Appointments" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="TimeMarkers">
+            <PropertyRef Name="TimeMarkerID" />
+          </Principal>
+          <Dependent Role="Appointments">
+            <PropertyRef Name="TimeMarkerID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ExceptionOccurrences_Appointments">
+        <End Type="OutlookModel.Appointment" Role="Appointments" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="OutlookModel.ExceptionOccurrence" Role="ExceptionOccurrences" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Appointments">
+            <PropertyRef Name="AppointmentID" />
+          </Principal>
+          <Dependent Role="ExceptionOccurrences">
+            <PropertyRef Name="MasterAppointmentID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Emails_Categories">
+        <End Type="OutlookModel.Category" Role="Categories" Multiplicity="0..1" />
+        <End Type="OutlookModel.Email" Role="Emails" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Categories">
+            <PropertyRef Name="CategoryID" />
+          </Principal>
+          <Dependent Role="Emails">
+            <PropertyRef Name="CategoryID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ExceptionAppointments_Categories">
+        <End Type="OutlookModel.Category" Role="Categories" Multiplicity="0..1" />
+        <End Type="OutlookModel.ExceptionAppointment" Role="ExceptionAppointments" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Categories">
+            <PropertyRef Name="CategoryID" />
+          </Principal>
+          <Dependent Role="ExceptionAppointments">
+            <PropertyRef Name="CategoryID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Emails_EmailClients">
+        <End Type="OutlookModel.EmailClient" Role="EmailClients" Multiplicity="0..1" />
+        <End Type="OutlookModel.Email" Role="Emails" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="EmailClients">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="Emails">
+            <PropertyRef Name="EmailClientID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Folder_EmailClients">
+        <End Type="OutlookModel.EmailClient" Role="EmailClients" Multiplicity="0..1" />
+        <End Type="OutlookModel.Folder" Role="Folders" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="EmailClients">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="Folders">
+            <PropertyRef Name="EmailClientID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Emails_Folder">
+        <End Type="OutlookModel.Folder" Role="Folders" Multiplicity="0..1" />
+        <End Type="OutlookModel.Email" Role="Emails" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Folders">
+            <PropertyRef Name="FolderID" />
+          </Principal>
+          <Dependent Role="Emails">
+            <PropertyRef Name="FolderID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ExceptionAppointments_ExceptionOccurrences">
+        <End Type="OutlookModel.ExceptionOccurrence" Role="ExceptionOccurrences" Multiplicity="1" />
+        <End Type="OutlookModel.ExceptionAppointment" Role="ExceptionAppointments" Multiplicity="0..1" />
+        <ReferentialConstraint>
+          <Principal Role="ExceptionOccurrences">
+            <PropertyRef Name="ExceptionID" />
+          </Principal>
+          <Dependent Role="ExceptionAppointments">
+            <PropertyRef Name="ExceptionID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ExceptionAppointments_TimeMarkers">
+        <End Type="OutlookModel.TimeMarker" Role="TimeMarkers" Multiplicity="0..1" />
+        <End Type="OutlookModel.ExceptionAppointment" Role="ExceptionAppointments" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="TimeMarkers">
+            <PropertyRef Name="TimeMarkerID" />
+          </Principal>
+          <Dependent Role="ExceptionAppointments">
+            <PropertyRef Name="TimeMarkerID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ExceptionResources_ExceptionAppointments">
+        <End Type="OutlookModel.ExceptionAppointment" Role="ExceptionAppointments" Multiplicity="1" />
+        <End Type="OutlookModel.ExceptionResource" Role="ExceptionResources" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ExceptionAppointments">
+            <PropertyRef Name="ExceptionID" />
+          </Principal>
+          <Dependent Role="ExceptionResources">
+            <PropertyRef Name="ExceptionAppointmentID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ExceptionResources_Resources">
+        <End Type="OutlookModel.Resource" Role="Resources" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="OutlookModel.ExceptionResource" Role="ExceptionResources" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Resources">
+            <PropertyRef Name="ResourceID" />
+          </Principal>
+          <Dependent Role="ExceptionResources">
+            <PropertyRef Name="ExceptionAppointmentResourcesID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Folder_Folder">
+        <End Type="OutlookModel.Folder" Role="Folders" Multiplicity="0..1" />
+        <End Type="OutlookModel.Folder" Role="Folders1" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Folders">
+            <PropertyRef Name="FolderID" />
+          </Principal>
+          <Dependent Role="Folders1">
+            <PropertyRef Name="ParentFolderID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Resources_ResourceTypes">
+        <End Type="OutlookModel.ResourceType" Role="ResourceTypes" Multiplicity="1" />
+        <End Type="OutlookModel.Resource" Role="Resources" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ResourceTypes">
+            <PropertyRef Name="ResourceTypeID" />
+          </Principal>
+          <Dependent Role="Resources">
+            <PropertyRef Name="ResourceTypeID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+    </Schema>
+    <Schema Namespace="OutlookInspiredApp.Service" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityContainer Name="OutlookEntities" m:IsDefaultEntityContainer="true" p6:LazyLoadingEnabled="true" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="AppointmentResources" EntityType="OutlookModel.AppointmentResource" />
+        <EntitySet Name="Appointments" EntityType="OutlookModel.Appointment" />
+        <EntitySet Name="Categories" EntityType="OutlookModel.Category" />
+        <EntitySet Name="EmailClients" EntityType="OutlookModel.EmailClient" />
+        <EntitySet Name="Emails" EntityType="OutlookModel.Email" />
+        <EntitySet Name="ExceptionAppointments" EntityType="OutlookModel.ExceptionAppointment" />
+        <EntitySet Name="ExceptionOccurrences" EntityType="OutlookModel.ExceptionOccurrence" />
+        <EntitySet Name="ExceptionResources" EntityType="OutlookModel.ExceptionResource" />
+        <EntitySet Name="Folders" EntityType="OutlookModel.Folder" />
+        <EntitySet Name="Resources" EntityType="OutlookModel.Resource" />
+        <EntitySet Name="ResourceTypes" EntityType="OutlookModel.ResourceType" />
+        <EntitySet Name="TimeMarkers" EntityType="OutlookModel.TimeMarker" />
+        <AssociationSet Name="FK_AppointmentResources_Appointments" Association="OutlookModel.FK_AppointmentResources_Appointments">
+          <End Role="AppointmentResources" EntitySet="AppointmentResources" />
+          <End Role="Appointments" EntitySet="Appointments" />
+        </AssociationSet>
+        <AssociationSet Name="FK_AppointmentResources_Resources" Association="OutlookModel.FK_AppointmentResources_Resources">
+          <End Role="AppointmentResources" EntitySet="AppointmentResources" />
+          <End Role="Resources" EntitySet="Resources" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Appointments_Categories" Association="OutlookModel.FK_Appointments_Categories">
+          <End Role="Appointments" EntitySet="Appointments" />
+          <End Role="Categories" EntitySet="Categories" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Appointments_TimeMarkers" Association="OutlookModel.FK_Appointments_TimeMarkers">
+          <End Role="Appointments" EntitySet="Appointments" />
+          <End Role="TimeMarkers" EntitySet="TimeMarkers" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ExceptionOccurrences_Appointments" Association="OutlookModel.FK_ExceptionOccurrences_Appointments">
+          <End Role="Appointments" EntitySet="Appointments" />
+          <End Role="ExceptionOccurrences" EntitySet="ExceptionOccurrences" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Emails_Categories" Association="OutlookModel.FK_Emails_Categories">
+          <End Role="Categories" EntitySet="Categories" />
+          <End Role="Emails" EntitySet="Emails" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ExceptionAppointments_Categories" Association="OutlookModel.FK_ExceptionAppointments_Categories">
+          <End Role="Categories" EntitySet="Categories" />
+          <End Role="ExceptionAppointments" EntitySet="ExceptionAppointments" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Emails_EmailClients" Association="OutlookModel.FK_Emails_EmailClients">
+          <End Role="EmailClients" EntitySet="EmailClients" />
+          <End Role="Emails" EntitySet="Emails" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Folder_EmailClients" Association="OutlookModel.FK_Folder_EmailClients">
+          <End Role="EmailClients" EntitySet="EmailClients" />
+          <End Role="Folders" EntitySet="Folders" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Emails_Folder" Association="OutlookModel.FK_Emails_Folder">
+          <End Role="Emails" EntitySet="Emails" />
+          <End Role="Folders" EntitySet="Folders" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ExceptionAppointments_ExceptionOccurrences" Association="OutlookModel.FK_ExceptionAppointments_ExceptionOccurrences">
+          <End Role="ExceptionAppointments" EntitySet="ExceptionAppointments" />
+          <End Role="ExceptionOccurrences" EntitySet="ExceptionOccurrences" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ExceptionAppointments_TimeMarkers" Association="OutlookModel.FK_ExceptionAppointments_TimeMarkers">
+          <End Role="ExceptionAppointments" EntitySet="ExceptionAppointments" />
+          <End Role="TimeMarkers" EntitySet="TimeMarkers" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ExceptionResources_ExceptionAppointments" Association="OutlookModel.FK_ExceptionResources_ExceptionAppointments">
+          <End Role="ExceptionAppointments" EntitySet="ExceptionAppointments" />
+          <End Role="ExceptionResources" EntitySet="ExceptionResources" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ExceptionResources_Resources" Association="OutlookModel.FK_ExceptionResources_Resources">
+          <End Role="ExceptionResources" EntitySet="ExceptionResources" />
+          <End Role="Resources" EntitySet="Resources" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Folder_Folder" Association="OutlookModel.FK_Folder_Folder">
+          <End Role="Folders" EntitySet="Folders" />
+          <End Role="Folders1" EntitySet="Folders" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Resources_ResourceTypes" Association="OutlookModel.FK_Resources_ResourceTypes">
+          <End Role="Resources" EntitySet="Resources" />
+          <End Role="ResourceTypes" EntitySet="ResourceTypes" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

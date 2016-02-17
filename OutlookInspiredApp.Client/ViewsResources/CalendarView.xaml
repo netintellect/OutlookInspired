@@ -1,0 +1,334 @@
+﻿<UserControl x:Class="TelerikOutlookInspiredApp.CalendarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:local="clr-namespace:TelerikOutlookInspiredApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1000">
+	<UserControl.DataContext>
+		<local:CalendarViewModel/>
+	</UserControl.DataContext>
+	<Grid x:Name="LayoutGrid">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<telerik:RadRichTextBoxRibbonUI x:Name="richTextBoxRibbonUI"
+                                        CollapseThresholdSize="0 0"
+                                        HelpButtonVisibility="Visible"
+                                        ApplicationButtonContent="File"
+                                        ApplicationName="" 
+                                        WindowIconVisibility="Visible"
+                                        Title="{Binding EmailClient.EmailAddress}"
+                                        MinimizeButtonVisibility="Visible"
+                                        telerik:KeyTipService.IsKeyTipsEnabled="True">
+			<telerik:EventToCommandBehavior.EventBindings>
+				<telerik:EventBinding Command="{Binding MenuOpenStateChangedCommand}" EventName="ApplicationMenuOpenStateChanged" CommandParameter="{Binding ElementName=richTextBoxRibbonUI}" />
+			</telerik:EventToCommandBehavior.EventBindings>
+			<telerik:RadRichTextBoxRibbonUI.Resources>
+				<telerik:FontFamiliesProvider x:Key="FontFamiliesProvider" />
+			</telerik:RadRichTextBoxRibbonUI.Resources>
+			<telerik:RadRichTextBoxRibbonUI.QuickAccessToolBar>
+				<telerik:QuickAccessToolBar>
+					<telerik:RadRibbonButton Command="{Binding OpenDialogCommand}" 
+                                             CommandParameter="Save" 
+                                             Size="Small" Text="Save" 
+                                             SmallImage="pack://application:,,,/Telerik.Windows.Controls.RichTextBoxUI;component/Images/MSOffice/16/save.png"/>
+					<telerik:RadRibbonSplitButton Command="{Binding OpenDialogCommand}" 
+                                                  CommandParameter="Undo" 
+                                                  Size="Small" Text="Undo"
+                                                  SmallImage="pack://application:,,,/Telerik.Windows.Controls.RichTextBoxUI;component/Images/MSOffice/16/undo.png">
+						<telerik:RadRibbonSplitButton.DropDownContent>
+							<telerik:MultipleUndoControl />
+						</telerik:RadRibbonSplitButton.DropDownContent>
+					</telerik:RadRibbonSplitButton>
+					<telerik:RadRibbonButton Command="{Binding OpenDialogCommand}"
+                                             CommandParameter="Redo" 
+                                             Size="Small" Text="Redo"
+                                             SmallImage="pack://application:,,,/Telerik.Windows.Controls.RichTextBoxUI;component/Images/MSOffice/16/redo.png" />
+				</telerik:QuickAccessToolBar>
+			</telerik:RadRichTextBoxRibbonUI.QuickAccessToolBar>
+			<telerik:RadRichTextBoxRibbonUI.Backstage>
+				<telerik:RadRibbonBackstage>
+					<telerik:RadRibbonBackstageItem Header="Info" IsDefault="True">
+						<StackPanel Margin="30">
+							<TextBlock Text="Account Information" FontSize="38" Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}" />
+						</StackPanel>
+					</telerik:RadRibbonBackstageItem>
+					<telerik:RadRibbonBackstageItem Header="Open &amp; Export">
+						<StackPanel Margin="30">
+							<TextBlock Text="Open" FontSize="38" Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}" />
+						</StackPanel>
+					</telerik:RadRibbonBackstageItem>
+					<telerik:RadRibbonBackstageItem Header="Save As" IsSelectable="False" />
+					<telerik:RadRibbonBackstageItem Header="Save Attachments" IsSelectable="False" IsEnabled="False" />
+					<telerik:RadRibbonBackstageItem Header="Print">
+						<StackPanel Margin="30">
+							<TextBlock Text="Print" FontSize="38" Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}" />
+						</StackPanel>
+					</telerik:RadRibbonBackstageItem>
+					<telerik:RadRibbonBackstageItem IsGroupSeparator="True" />
+					<telerik:RadRibbonBackstageItem Header="Options" IsSelectable="False" />
+					<telerik:RadRibbonBackstageItem Header="Exit" IsSelectable="False" />
+				</telerik:RadRibbonBackstage>
+			</telerik:RadRichTextBoxRibbonUI.Backstage>
+			<telerik:RadRibbonTab Header="Home" telerik:KeyTipService.AccessText="H">
+				<telerik:RadRibbonGroup Header="New">
+					<telerik:RadCollapsiblePanel>
+						<telerik:RadRibbonButton Text="New Appointment"
+                                                 AllowDrop="True"
+                                                 LargeImage="..\Images\calendar_new.png"
+                                                 Size="Large"
+                                                 telerik:ScreenTip.Title="New Item"
+                                                 telerik:ScreenTip.Description="Create a new item."
+                                                 Command="telerik:RadScheduleViewCommands.CreateAppointment"
+                                                 CommandTarget="{Binding ElementName=CalendarScheduleView}"
+                                                 telerik:KeyTipService.AccessText="N"
+                                                 Margin="0 4 4 0"/>
+						<telerik:RadRibbonButton Text="Delete Appointment"
+                                                 AllowDrop="True"
+                                                 LargeImage="..\Images\calendar_delete.png"
+                                                 Size="Large"
+                                                 telerik:ScreenTip.Title="Delete Appointment"
+                                                 telerik:ScreenTip.Description="Delete Appointment."
+                                                 Command="telerik:RadScheduleViewCommands.DeleteAppointment" 
+                                                 CommandTarget="{Binding ElementName=CalendarScheduleView}"
+                                                 telerik:KeyTipService.AccessText="D"
+                                                 Margin="0 4 4 0"/>
+					</telerik:RadCollapsiblePanel>
+				</telerik:RadRibbonGroup>
+				<telerik:RadRibbonGroup Header="Go To">
+					<telerik:RadCollapsiblePanel>
+						<telerik:RadRibbonButton Text="Today"
+                                                 AllowDrop="True"
+                                                 LargeImage="..\Images\calendar_today.png"
+                                                 Size="Large"
+                                                 telerik:ScreenTip.Title="Go To Today"
+                                                 telerik:ScreenTip.Description="Navigates to Today's view."
+                                                 Command="{Binding SetTodayCommand}"
+                                                 Margin="0 4 4 0"/>
+						<telerik:RadRibbonButton Text="Next range"
+                                                 AllowDrop="True"
+                                                 LargeImage="..\Images\calendar_next_range.png"
+                                                 Size="Large"
+                                                 telerik:ScreenTip.Title="Go To Next range"
+                                                 telerik:ScreenTip.Description="Navigates to next range's view."
+                                                 Command="telerik:RadScheduleViewCommands.IncreaseVisibleDateLarge" 
+                                                 CommandTarget="{Binding ElementName=CalendarScheduleView}"
+                                                 Margin="0 4 4 0"/>
+					</telerik:RadCollapsiblePanel>
+				</telerik:RadRibbonGroup>
+				<telerik:RadRibbonGroup Header="Views">
+					<telerik:RadCollapsiblePanel>
+						<telerik:RadRibbonButton Text="Day View"
+                                                 LargeImage="..\Images\calendar_today.png"
+                                                 Size="Large"
+                                                 CollapseToSmall="WhenGroupIsMedium"
+                                                 telerik:ScreenTip.Title="Day View"
+                                                 telerik:ScreenTip.Description="Show Day View."
+                                                 Command="telerik:RadScheduleViewCommands.SetDayViewMode" 
+                                                 CommandTarget="{Binding ElementName=CalendarScheduleView}"
+                                                 Margin="0 4 4 0" />
+						<telerik:RadRibbonButton Text="Week View"
+                                                 LargeImage="..\Images\calendar_week.png"
+                                                 Size="Large"
+                                                 CollapseToSmall="WhenGroupIsMedium"
+                                                 telerik:ScreenTip.Title="Week View"
+                                                 telerik:ScreenTip.Description="Show Week View."
+                                                 Command="{Binding SetWeekViewCommand}"
+                                                 Margin="0 4 4 0" />
+						<telerik:RadRibbonButton Text="Work View"
+                                                 LargeImage="..\Images\calendar_work.png"
+                                                 Size="Large"
+                                                 CollapseToSmall="WhenGroupIsMedium"
+                                                 telerik:ScreenTip.Title="Work View"
+                                                 telerik:ScreenTip.Description="Show Work View."
+                                                 Command="{Binding SetWorkWeekCommand}"
+                                                 Margin="0 4 4 0" />
+						<telerik:RadRibbonButton Text="Month View"
+                                                 LargeImage="..\Images\calendar_month.png"
+                                                 Size="Large"
+                                                 CollapseToSmall="WhenGroupIsMedium"
+                                                 telerik:ScreenTip.Title="Month View"
+                                                 telerik:ScreenTip.Description="Show Month View."
+                                                 Command="telerik:RadScheduleViewCommands.SetMonthViewMode" 
+                                                 CommandTarget="{Binding ElementName=CalendarScheduleView}"
+                                                 Margin="0 4 4 0" />
+						<telerik:RadRibbonButton Text="Timeline View"
+                                                 LargeImage="..\Images\calendar_timeline.png"
+                                                 Size="Large"
+                                                 CollapseToSmall="WhenGroupIsMedium"
+                                                 telerik:ScreenTip.Title="Timeline View"
+                                                 telerik:ScreenTip.Description="Show Timeline View."
+                                                 Command="telerik:RadScheduleViewCommands.SetTimelineViewMode" 
+                                                 CommandTarget="{Binding ElementName=CalendarScheduleView}"
+                                                 Margin="0 4 4 0" />
+					</telerik:RadCollapsiblePanel>
+				</telerik:RadRibbonGroup>
+				<telerik:RadRibbonGroup Header="Markers">
+					<telerik:RadCollapsiblePanel>
+
+						<telerik:RadRibbonDropDownButton Text="Categorize"
+                                                         LargeImage="..\Images\calendar_categories.png"
+                                                         Size="Medium"
+                                                         telerik:ScreenTip.Title="Categorize"
+                                                         telerik:ScreenTip.Description="Categorize this appointment.">
+							<telerik:RadRibbonDropDownButton.DropDownContent>
+								<telerik:RadListBox ItemsSource="{Binding Categories}" 
+													BorderThickness="0"
+													SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+													ItemTemplate="{StaticResource CategoryItemTemplate}">
+									<telerik:EventToCommandBehavior.EventBindings>
+										<telerik:EventBinding Command="{Binding SetCategoryCommand}" EventName="SelectionChanged" />
+									</telerik:EventToCommandBehavior.EventBindings>
+								</telerik:RadListBox>
+								<!--<telerik:RadContextMenu BorderThickness="0" IconColumnWidth="25">
+									<telerik:RadMenuItem HeaderTemplate="{StaticResource CategoryHeaderTemplate}"
+                                                     Command="{Binding SetCategoryCommand}"
+                                                     CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}">
+										<telerik:RadMenuItem.Header>
+											<telerik:Category CategoryBrush="{StaticResource RedCategoryBrush}" CategoryName="Red"/>
+										</telerik:RadMenuItem.Header>
+										<telerik:RadMenuItem.Icon>
+											<Image Source="..\Images\red_category.png" Width="16" />
+										</telerik:RadMenuItem.Icon>
+									</telerik:RadMenuItem>
+									<telerik:RadMenuItem HeaderTemplate="{StaticResource CategoryHeaderTemplate}"
+                                                     Command="{Binding SetCategoryCommand}"
+                                                     CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}">
+										<telerik:RadMenuItem.Header>
+											<telerik:Category CategoryBrush="{StaticResource GreenCategoryBrush}" CategoryName="Green"/>
+										</telerik:RadMenuItem.Header>
+										<telerik:RadMenuItem.Icon>
+											<Image Source="..\Images\green_category.png" Width="16" />
+										</telerik:RadMenuItem.Icon>
+									</telerik:RadMenuItem>
+									<telerik:RadMenuItem HeaderTemplate="{StaticResource CategoryHeaderTemplate}"
+                                                     Command="{Binding SetCategoryCommand}"
+                                                     CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}">
+										<telerik:RadMenuItem.Header>
+											<telerik:Category CategoryBrush="{StaticResource BlueCategoryBrush}" CategoryName="Blue"/>
+										</telerik:RadMenuItem.Header>
+										<telerik:RadMenuItem.Icon>
+											<Image Source="..\Images\blue_category.png" Width="16" />
+										</telerik:RadMenuItem.Icon>
+									</telerik:RadMenuItem>
+								</telerik:RadContextMenu>-->
+							</telerik:RadRibbonDropDownButton.DropDownContent>
+						</telerik:RadRibbonDropDownButton>
+						<telerik:RadComboBox ItemsSource="{Binding TimeMarkers}" 
+											 SelectedItem="{Binding SelectedTimeMarker, Mode=TwoWay}"
+											 ClearSelectionButtonVisibility="Visible" 
+											 ClearSelectionButtonContent="Clear" 
+											 ItemTemplate="{StaticResource TimeMarkerComboBoxItemContentTemplate}" 
+											 SelectionBoxTemplate="{StaticResource TimeMarkerComboBoxItemContentTemplate}" 
+											 EmptySelectionBoxTemplate="{StaticResource TimeMarkerEmptySelectionBoxTemplate}"											 											 
+											 telerik:ScreenTip.Title="Time Markers"
+                                             telerik:ScreenTip.Description="Apply time Marker to this appointment."
+											 
+											 />
+
+						<!--<telerik:RadRibbonDropDownButton Text="Time Markers"
+                                                         LargeImage="..\Images\calendar_time_marker.png"
+                                                         Size="Medium" 
+                                                         telerik:ScreenTip.Title="Time Markers"
+                                                         telerik:ScreenTip.Description="Apply time Marker to this appointment.">
+							<telerik:RadRibbonDropDownButton.DropDownContent>
+								<StackPanel Orientation="Vertical">
+									<Button Content="clear" />
+									<telerik:RadListBox ItemsSource="{Binding TimeMarkers}" 
+													BorderThickness="0"
+													SelectedItem="{Binding SelectedTimeMarker, Mode=TwoWay}"
+													ItemTemplate="{StaticResource TimeMarkerItemTemplate}">
+										<telerik:EventToCommandBehavior.EventBindings>
+											<telerik:EventBinding Command="{Binding SetTimeMarkerCommand}" EventName="SelectionChanged" />
+										</telerik:EventToCommandBehavior.EventBindings>
+									</telerik:RadListBox>
+								</StackPanel>
+							</telerik:RadRibbonDropDownButton.DropDownContent>
+						</telerik:RadRibbonDropDownButton>-->
+					</telerik:RadCollapsiblePanel>
+				</telerik:RadRibbonGroup>
+			</telerik:RadRibbonTab>
+		</telerik:RadRichTextBoxRibbonUI>
+
+		<telerik:RadDocking BorderThickness="0" HasDocumentHost="False" Grid.Row="1" RetainPaneSizeMode="DockingAndFloating">
+			<telerik:EventToCommandBehavior.EventBindings>
+				<telerik:EventBinding Command="{Binding PreviewShowCompassCommand}" EventName="PreviewShowCompass" PassEventArgsToCommand="True" />
+			</telerik:EventToCommandBehavior.EventBindings>
+			<telerik:RadSplitContainer>
+				<telerik:RadPaneGroup telerik:ProportionalStackPanel.RelativeSize="100, 75">
+					<telerik:RadPane Header="Calendar" CanUserClose="False" local:ConditionalDockingHelper.PaneType="Restricted">
+						<telerik:RadOutlookBar x:Name="OutlookBar"
+                                               IsContentPreserved="True"
+                                               Grid.Row="1"
+                                               HorizontalAlignment="Stretch"
+                                               IsMinimizable="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type telerik:RadPane}}, Path=IsPinned}"
+                                               local:OutlookBarExtensions.IsWidthLinked="True"
+                                               IsVerticalResizerVisible="False"
+                                               MinimizedWidth="43"
+                                               TitleTemplate="{StaticResource OutlookSectionTitleTemplate}"
+                                               ItemsSource="{Binding OutlookSections}"
+                                               SelectedItem="{Binding SelectedOutlookSection, Mode=TwoWay}"
+                                               ContentTemplate="{StaticResource OutlookSectionCalendarContentTemplate}"
+                                               ItemTemplate="{StaticResource OutlookSectionTemplate}"
+                                               MinimizedButtonContent="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Name}">
+							<telerik:EventToCommandBehavior.EventBindings>
+								<telerik:EventBinding Command="{Binding OutlookBarSelectionChangedCommand}" EventName="SelectionChanged" PassEventArgsToCommand="True" />
+							</telerik:EventToCommandBehavior.EventBindings>
+						</telerik:RadOutlookBar>
+					</telerik:RadPane>
+				</telerik:RadPaneGroup>
+			</telerik:RadSplitContainer>
+			<telerik:RadSplitContainer>
+				<telerik:RadPaneGroup>
+					<telerik:RadPane Header="{Binding ElementName=CalendarScheduleView, Path=ActiveViewDefinition}" 
+                                     DataContext="{Binding ElementName=LayoutGrid, Path=DataContext}"
+                                     CanUserClose="False" 
+                                     CanUserPin="False">
+						<telerik:RadScheduleView x:Name="CalendarScheduleView"
+                                                 ActiveViewDefinitionIndex="{Binding ActiveViewDefinitionIndex, Mode=TwoWay}"
+                                                 CurrentDate="{Binding SelectedOutlookSection.SelectedItem, Mode=TwoWay}"
+                                                 SelectedAppointment="{Binding SelectedAppointment, Mode=TwoWay}"
+                                                 AppointmentsSource="{Binding Appointments}"
+												 ResourceTypesSource="{Binding ResourceTypes}"
+												 TimeMarkersSource="{Binding TimeMarkers}"
+												 CategoriesSource="{Binding Categories}"
+                                                 NavigationHeaderVisibility="Collapsed"
+                                                 GroupDescriptionsSource="{Binding GroupDescriptions}"
+                                                 GroupHeaderContentTemplateSelector="{StaticResource GroupHeaderContentTemplateSelector}"
+												 VisibleRangeChangedCommand="{Binding VisibleRangeChanged}"
+												 VisibleRangeChangedCommandParameter="{Binding VisibleRange, RelativeSource={RelativeSource Self}}">
+							<telerik:RadScheduleView.ViewDefinitions>
+								<telerik:DayViewDefinition MinTimeRulerExtent="625" GroupFilter="{Binding GroupFilter}"/>
+								<telerik:WeekViewDefinition MinTimeRulerExtent="625" GroupFilter="{Binding GroupFilter}"/>
+								<local:WorkWeekViewDefinition MinTimeRulerExtent="625" GroupFilter="{Binding GroupFilter}"
+                                                              DayStartTime="07:30" DayEndTime="18:30" Title="Work"/>
+								<telerik:MonthViewDefinition MinTimeRulerExtent="625" GroupFilter="{Binding GroupFilter}"/>
+								<telerik:TimelineViewDefinition MinTimeRulerExtent="625" GroupFilter="{Binding GroupFilter}"/>
+							</telerik:RadScheduleView.ViewDefinitions>
+						</telerik:RadScheduleView>
+					</telerik:RadPane>
+				</telerik:RadPaneGroup>
+			</telerik:RadSplitContainer>
+		</telerik:RadDocking>
+
+		<Border Grid.Row="2" Style="{StaticResource CalendarFooterSlider}">
+			<StackPanel>
+				<telerik:RadSlider HandlesVisibility="Visible" 
+                                   Width="160"
+                                   Minimum="625" Maximum="5000" 
+                                   Margin="5"
+						           VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+						           Value="{Binding ActiveViewDefinition.MinTimeRulerExtent, ElementName=CalendarScheduleView, Mode=TwoWay}"
+						           LargeChange="1250"
+                                   SmallChange="1250"/>
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>

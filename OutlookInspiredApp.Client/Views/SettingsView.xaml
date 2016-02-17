@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="TelerikOutlookInspiredApp.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+			 xmlns:model="clr-namespace:TelerikOutlookInspiredApp.Models.Appearance"
+			 xmlns:local="clr-namespace:TelerikOutlookInspiredApp"
+			 xmlns:converter="clr-namespace:TelerikOutlookInspiredApp.Helpers"
+             mc:Ignorable="d" >
+
+	<UserControl.DataContext>
+		<local:SettingsViewModel />
+	</UserControl.DataContext>
+    <UserControl.Resources>
+        <converter:SettingsButtonToSelectedThemeConverter x:Key="themeConverter"/>
+    </UserControl.Resources>
+
+	<ScrollViewer x:Name="scrollViewer" BorderThickness="0" Background="{StaticResource TransparentBrush}" VerticalScrollBarVisibility="Disabled">
+		<StackPanel Orientation="Horizontal" Margin="16 0 16 0" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100">
+			<telerik:RadRadioButton Content="Office Blue" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}" 
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Office_Blue}">
+				<telerik:RadRadioButton.Background>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="#FFEBF3FF"/>
+						<GradientStop Color="#FFD0F3FF" Offset="1"/>
+						<GradientStop Color="#FFA1C5F2" Offset="0.43"/>
+						<GradientStop Color="#FFCAE1FF" Offset="0.42"/>
+					</LinearGradientBrush>
+				</telerik:RadRadioButton.Background>
+				<telerik:RadRadioButton.CommandParameter>
+                    <model:AppearanceCommandParameter Theme="Office_Blue" ColorVariation="Dark" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Content="Summer" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Summer}">
+				<telerik:RadRadioButton.Background>
+					<LinearGradientBrush EndPoint="0.5,0.897" StartPoint="0.5,0.11">
+						<GradientStop Color="#FF0E7093" Offset="0"/>
+						<GradientStop Color="#FF198FB0" Offset="1"/>
+					</LinearGradientBrush>
+				</telerik:RadRadioButton.Background>
+				<telerik:RadRadioButton.CommandParameter>
+                    <model:AppearanceCommandParameter Theme="Summer" ColorVariation="Dark" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Content="Vista" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Vista}">
+				<telerik:RadRadioButton.Background>
+					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+						<GradientStop Color="#FF9CDCFD" Offset="0"/>
+						<GradientStop Color="#FFE1F3FD" Offset="1"/>
+						<GradientStop Color="#FFB3E3FF" Offset="0.5"/>
+						<GradientStop Color="#FFD5F0FF" Offset="0.51"/>
+					</LinearGradientBrush>
+				</telerik:RadRadioButton.Background>
+				<telerik:RadRadioButton.CommandParameter>
+                    <model:AppearanceCommandParameter Theme="Vista" ColorVariation="Light"  />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Background="#FF25A0DA" Content="Windows8" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Windows8}">
+				<telerik:RadRadioButton.CommandParameter>
+					<model:AppearanceCommandParameter Theme="Windows8" ColorVariation="Light" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Background="#FF575859" Content="Expression Dark" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Expression_Dark}">
+				<telerik:RadRadioButton.CommandParameter>
+					<model:AppearanceCommandParameter Theme="Expression_Dark" ColorVariation="ExpressionDark" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Background="#FFF1F5FB" Content="Windows7" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Windows7}">
+				<telerik:RadRadioButton.CommandParameter>
+					<model:AppearanceCommandParameter Theme="Windows7" ColorVariation="Windows7" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+			<telerik:RadRadioButton Background="#FF0072C6" Content="Office2013" Command="{Binding ChangeAppearanceCommand}"
+                                    Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=Office2013}">
+				<telerik:RadRadioButton.CommandParameter>
+					<model:AppearanceCommandParameter Theme="Office2013" ColorVariation="Light" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Background="#FF3399FF" Content="VS2013" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=VisualStudio2013}">
+				<telerik:RadRadioButton.CommandParameter>
+                    <model:AppearanceCommandParameter Theme="VisualStudio2013" ColorVariation="Light"/>
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Background="#FF35496A" Content="VS2013 Blue" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=VisualStudio2013_Blue}">
+				<telerik:RadRadioButton.CommandParameter>
+					<model:AppearanceCommandParameter Theme="VisualStudio2013_Blue" ColorVariation="Light" />
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+
+            <telerik:RadRadioButton Background="#FF3F3F46" Content="VS2013 Dark" Command="{Binding ChangeAppearanceCommand}" Style="{DynamicResource ThemeRadioButtonStyle}" Margin="0"
+                                    IsChecked="{Binding Mode=OneWay, Converter={StaticResource themeConverter}, ConverterParameter=VisualStudio2013_Dark}">
+				<telerik:RadRadioButton.CommandParameter>
+					<model:AppearanceCommandParameter Theme="VisualStudio2013_Dark" ColorVariation="Light"/>
+				</telerik:RadRadioButton.CommandParameter>
+			</telerik:RadRadioButton>
+		</StackPanel>
+	</ScrollViewer>
+
+</UserControl>
